@@ -52,9 +52,19 @@ taylor <- function (polinomio, orden, x0, x){
   return (suma)
 }
 
+temp <- list()
 for (i in length(temperaturas)){
-  print(taylor(polinomio, 6, 20, temperaturas[i]))
+  x <- taylor(polinomio, 6, 20, temperaturas[i])
+  temp[[i]] <- x
+
 }
 
+data_plot <- data.frame(Días = dias, Temperaturas = temperaturas)
+data_interp <- data.frame(Días = dias, Temperatura_Interpolada = temp)
 
+ggplot() +
+  geom_point(data = data_plot, aes(x = Días, y = Temperaturas), color = "red") + # nolint: object_name_linter, line_length_linter.
+  geom_line(data = data_interp, aes(x = Días, y = Temperatura_Interpolada), color = "blue") + # nolint: line_length_linter, object_name_linter.
+  labs(title = "Temperaturas y Polinomio Interpolado de Taylor", x = "Días", y = "Temperatura") + # nolint: line_length_linter.
+  xlim(c(dias[1], dias[n])) + ylim(c(0, 35)) + theme_bw() # nolint: line_length_linter.
 
