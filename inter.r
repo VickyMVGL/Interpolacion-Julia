@@ -28,21 +28,21 @@ derivar <- function(poli, n){
   
 }
 
-taylor <- function (polinomio, orden, x){
+taylor <- function (polinomio, orden, x0, x){
   n <- 0
   suma <- ""
   for (i in 1:(orden+1)){
     print(i)
     if (n == 0) {
       numero<- predict(polinomio, x)
-      suma <-  paste(numero, " ")
+      suma <-  numero
       n <- n+1
       print (i)
 
     } else{
       derivada <- derivar (polinomio, i-1)
       numero <- predict(derivada, x)
-      suma <- paste(suma, "+ (" , numero, "/",i-1, "!)* (x-", x, ")^", i-1)
+      suma <- suma + (( numero/factorial(i-1))* (x-x0)^(i-1))
       n<- n+1
       print (i)
     }
@@ -52,8 +52,9 @@ taylor <- function (polinomio, orden, x){
   return (suma)
 }
 
-polinomio <- polynomial(c(1, 0 , -3, 0, 1))
-print(polinomio)
+for (i in length(temperaturas)){
+  print(taylor(polinomio, 6, 20, temperaturas[i]))
+}
 
-print(taylor(polinomio, 4, 1))
+
 
